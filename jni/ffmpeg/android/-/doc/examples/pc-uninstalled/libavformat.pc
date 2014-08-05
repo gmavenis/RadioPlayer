@@ -1,0 +1,12 @@
+prefix=
+exec_prefix=
+libdir=${pcfiledir}/../../../libavformat
+includedir=/tmp/RadioPlayer/jni/ffmpeg
+
+Name: libavformat
+Description: FFmpeg container format library
+Version: 54.44.100
+Requires: libavcodec = 54.79.100
+Conflicts:
+Libs: -L${libdir} -lavformat 
+Cflags: -I${includedir}
