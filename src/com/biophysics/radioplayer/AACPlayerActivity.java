@@ -17,14 +17,6 @@
  **/
 package com.biophysics.radioplayer;
 
-//import java.net.URL;
-//import java.io.BufferedReader;
-//import java.io.InputStreamReader;
-//import java.lang.String;
-//import java.lang.StringBuilder;
-import java.net.HttpURLConnection;
-import java.net.URL;
-
 import android.util.Log;
 
 import android.app.Activity;
@@ -32,7 +24,6 @@ import android.app.Activity;
 
 import android.app.AlertDialog;
 import android.app.NotificationManager;
-import android.content.Context;
 import android.media.AudioManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
@@ -87,7 +78,7 @@ public class AACPlayerActivity extends Activity implements
 	private ProgressBar progress;
 	private Handler uiHandler;
 
-
+// the next line brings the AACPlayer.java stop inside this file
 	private AACPlayer aacPlayer;
 
 
@@ -98,18 +89,7 @@ public class AACPlayerActivity extends Activity implements
 	private boolean playerStarted;
 
 
-	public void displayAlert(){
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("No network connection");
-		builder.setMessage("Please check your internet connection.");
-		builder.setPositiveButton("OK", null);
-		AlertDialog dialog = builder.show();
 
-		// Must call show() prior to fetching text view
-		TextView messageView = (TextView)dialog.findViewById(android.R.id.message);
-		messageView.setGravity(Gravity.LEFT);
-		
-	}
 	
 	public void playerStarted() {
 		uiHandler.post(new Runnable() {
@@ -164,59 +144,59 @@ public class AACPlayerActivity extends Activity implements
 			switch (v.getId()) {
 
 			case R.id.play1:
-				pause_before_play();
-				if (checkNetwork() == false) break;
 				mPlay1.setEnabled(false);
 				mPlay1.setAlpha(128);
+				pause_before_play();
+				if (checkNetwork() == false) break;
 				startOne(Decoder.DECODER_FFMPEG_WMA);
 				// txtStatus.setText( R.string.text_using_FFmpeg );
 				break;
 
 			case R.id.play1xtra:
-				pause_before_play();
-				if (checkNetwork() == false) break;
 				mPlay1xtra.setEnabled(false);
 				mPlay1xtra.setAlpha(128);
+				pause_before_play();
+				if (checkNetwork() == false) break;
 				startOnextra(Decoder.DECODER_FFMPEG_WMA);
 				break;
 
 			case R.id.play2:
-				pause_before_play();
-				if (checkNetwork() == false) break;
 				mPlay2.setEnabled(false);
 				mPlay2.setAlpha(128);
+				pause_before_play();
+				if (checkNetwork() == false) break;
 				startTwo(Decoder.DECODER_FFMPEG_WMA);
 				break;
 
 			case R.id.play3:
-				pause_before_play();
-				if (checkNetwork() == false) break;
 				mPlay3.setEnabled(false);
 				mPlay3.setAlpha(128);
+				pause_before_play();
+				if (checkNetwork() == false) break;
 				startThree(Decoder.DECODER_FFMPEG_WMA);
 				break;
 
 			case R.id.play4:
-				pause_before_play();				
-				if (checkNetwork() == false) break;
 				mPlay4.setEnabled(false);
 				mPlay4.setAlpha(128);
+				pause_before_play();				
+				if (checkNetwork() == false) break;
 				startFour(Decoder.DECODER_FFMPEG_WMA);
 				break;
 
 			case R.id.play5:
-				pause_before_play();
-				if (checkNetwork() == false) break;
 				mPlay5.setEnabled(false);
 				mPlay5.setAlpha(128);
+				pause_before_play();
+				if (checkNetwork() == false) break;
 				startFive(Decoder.DECODER_FFMPEG_WMA);
 				break;
 
 			case R.id.play4xtra:
-				pause_before_play();
-				if (checkNetwork() == false) break;
 				mPlay4xtra.setEnabled(false);
 				mPlay4xtra.setAlpha(128);
+				pause_before_play();
+				if (checkNetwork() == false) break;
 				startFourxtra(Decoder.DECODER_FFMPEG_WMA);
 				break;
 
@@ -229,23 +209,24 @@ public class AACPlayerActivity extends Activity implements
 				break;
 
 			case R.id.playAsian:
-				pause_before_play();
-				if (checkNetwork() == false) break;
 				mPlayAsian.setEnabled(false);
 				mPlayAsian.setAlpha(128);
+				pause_before_play();
+				if (checkNetwork() == false) break;
 				startAsian(Decoder.DECODER_FFMPEG_WMA);
 				break;
 
 			case R.id.playWs:
-				pause_before_play();
-				if (checkNetwork() == false) break;
 				mPlayWs.setEnabled(false);
 				mPlayWs.setAlpha(128);
+				pause_before_play();
+				if (checkNetwork() == false) break;
 				startWs(Decoder.DECODER_FFMPEG_WMA);
 				
 				break;
 
 			case R.id.stop:
+				mStop.setEnabled(false);
 				mStop.setAlpha(255);
 //                try {
 //                	Thread.sleep(1000);
@@ -256,14 +237,16 @@ public class AACPlayerActivity extends Activity implements
 				pause_before_stop();
 				//System.exit(0);
 				//enableButtons();
+				Log.d( LOG, "AACPlayerActivity SMOOTH FINISH");
 				finish();
 				break;
 			}
 		} catch (Exception e) {
-			mStop.setEnabled(true);
-        	displayAlert();
-			Log.e("AACPlayerActivity", "exc exception when clicked and no network", e);
-		}
+			// TODO Auto-generated catch block
+			displayAlert();
+			//finish();
+		} 
+		
 	}
 
 
@@ -343,12 +326,13 @@ public class AACPlayerActivity extends Activity implements
 		if (aacPlayer != null) {
 			aacPlayer.stop();
 			aacPlayer = null;
-		}
+		    }
 		try {
 			Thread.sleep(10);
 			Log.d( LOG, "AACPlayerActivity inside PAUSE sleeping");
 			}
 		catch (Exception e) {
+			Log.d( LOG, "AACPlayerActivity inside PAUSE exception");
 		}
 	}
 
@@ -361,19 +345,18 @@ public class AACPlayerActivity extends Activity implements
 		//aacPlayer.stop();
 		//pcmFeed.stop();
 		//mmsinputStream.close();
-		enableButtons();
 		try {
-			Thread.sleep(10);
-				if (aacPlayer.stopped) {
-					finish();
-				}
 			aacPlayer.stop();
 			aacPlayer = null;
 			mStop.setEnabled(true);
-
 			Log.d( LOG, "AACPlayerActivity inside PAUSE_before_stop sleeping");
+			Thread.sleep(100);
 			}
 		catch (Exception e) {
+			// do here something
+			Log.d( LOG, "AACPlayerActivity inside PAUSE_before_stop CRASH");
+
+			System.exit(0);
 		}
 	}
 	
@@ -569,33 +552,39 @@ public class AACPlayerActivity extends Activity implements
 		mPlay5xtra.setEnabled(false);
 		mPlayWs.setEnabled(false);
 		mPlayAsian.setEnabled(false);
-		
-		mPlay1.setAlpha(255);
-		mPlay1xtra.setAlpha(255);
-		mPlay2.setAlpha(255);
-		mPlay3.setAlpha(255);
-		mPlay4.setAlpha(255);
-		mPlay4xtra.setAlpha(255);
-		mPlay5.setAlpha(255);
-		mPlay5xtra.setAlpha(255);
-		mPlayWs.setAlpha(255);
-		mPlayAsian.setAlpha(255);
 	}
+//	private void brightButtons() {
+//		mPlay1.setAlpha(255);
+//		mPlay1xtra.setAlpha(255);
+//		mPlay2.setAlpha(255);
+//		mPlay3.setAlpha(255);
+//		mPlay4.setAlpha(255);
+//		mPlay4xtra.setAlpha(255);
+//		mPlay5.setAlpha(255);
+//		mPlay5xtra.setAlpha(255);
+//		mPlayWs.setAlpha(255);
+//		mPlayAsian.setAlpha(255);
+//	}
+
+	private void displayAlert(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("No network connection");
+		builder.setMessage("Please check your internet connection.");
+		builder.setPositiveButton("OK", null);
+		AlertDialog dialog = builder.show();
+
+		// Must call show() prior to fetching text view
+		TextView messageView = (TextView)dialog.findViewById(android.R.id.message);
+		messageView.setGravity(Gravity.LEFT);
+	}
+	
+	private boolean checkNetwork() throws Exception {
+		return true;
+	}
+	
 
 	
 	
-	private boolean checkNetwork() throws Exception {
-		URL url4 = new URL("http://bbc.net.uk");
-		HttpURLConnection urlc = (HttpURLConnection) url4.openConnection();
-		urlc.setRequestProperty("Connection", "close");
-	    urlc.setConnectTimeout(1000 * 30); // mTimeout is in seconds
-        urlc.connect();
-        if (urlc.getResponseCode() == 200) {
-        	return true;
-        } else {
-        	displayAlert();
-        	return false;
-        }
-	}
+	
 	
 }

@@ -21,7 +21,7 @@ package com.biophysics.radioplayer;
 
 import java.io.InputStream;
 
-import java.net.URLConnection;
+//import java.net.URLConnection;
 
 import android.util.Log;
 
@@ -247,7 +247,7 @@ public abstract class AACPlayer {
 
         sumKBitSecRate = 0;
         countKBitSecRate = 0;
-        Log.d( LOG, "AACPlayer: expectedKBitSecRate " + expectedKBitSecRate);
+//        Log.d( LOG, "AACPlayer: expectedKBitSecRate " + expectedKBitSecRate);
 
         playImpl( is, expectedKBitSecRate );
 

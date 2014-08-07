@@ -3,7 +3,7 @@
 	  xmlns:android="http://schemas.android.com/apk/res/android"
 	  android:versionName="@string/app_version" package="com.biophysics.radioplayer" android:versionCode="2">
 
-    	<uses-sdk android:minSdkVersion="8"/>
+    	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="16" android:maxSdkVersion="19"/>
     
     	
 	<uses-permission android:name="android.permission.INTERNET" />

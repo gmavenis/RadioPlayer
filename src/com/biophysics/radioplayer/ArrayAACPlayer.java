@@ -76,7 +76,7 @@ public class ArrayAACPlayer extends AACPlayer {
                             int audioBufferCapacityMs, int decodeBufferCapacityMs ) {
 
         super( playerCallback, audioBufferCapacityMs, decodeBufferCapacityMs );
-        Log.d( LOG, "ArrayAACPlayer audioBufferCapacityMs " + audioBufferCapacityMs);
+        //Log.d( LOG, "ArrayAACPlayer audioBufferCapacityMs " + audioBufferCapacityMs);
         this.decoder = decoder;
     }
 
@@ -111,7 +111,7 @@ public class ArrayAACPlayer extends AACPlayer {
         try {
             Decoder.Info info = decoder.start( reader );
 
-            Log.d( LOG, "playImpl(): samplerate=" + info.getSampleRate() + ", channels=" + info.getChannels());
+            //Log.d( LOG, "playImpl(): samplerate=" + info.getSampleRate() + ", channels=" + info.getChannels());
 
             profSampleRate = info.getSampleRate() * info.getChannels();
 
