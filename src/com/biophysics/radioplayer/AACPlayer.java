@@ -55,7 +55,7 @@ public abstract class AACPlayer {
     public static final int DEFAULT_DECODE_BUFFER_CAPACITY_MS = 700;
 
 
-    private static final String LOG = "AACPlayer";
+//    private static final String LOG = "AACPlayer";
 
 
     ////////////////////////////////////////////////////////////////////////////
